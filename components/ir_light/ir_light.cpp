@@ -40,6 +40,7 @@ namespace esphome
     static constexpr uint32_t OFF = 0x00FFE21D;
     static constexpr uint32_t BR_DOWN = 0x00FF906F;
     static constexpr uint32_t BR_UP = 0x00FFA857;
+    static constexpr uint8_t TIMEOUT = 200;
 
     static const std::unordered_map<Color, uint32_t, ColorHasher> SUPPORTED_COLORS = {
         {{255, 255, 255}, 0x00FF52AD}, // WHITE
@@ -67,11 +68,17 @@ namespace esphome
 
     void IrLightOutput::setup_state(light::LightState *state)
     {
-      brightness_ = state->current_values.get_brightness();
+      state_ = state;
+      ESP_LOGCONFIG(TAG, "Setup state addr %p", state);
+    }
+
+    void IrLightOutput::update_state(light::LightState *state) {
+      ESP_LOGCONFIG(TAG, "Update state addr %p", state);
     }
 
     void IrLightOutput::write_state(light::LightState *state)
     {
+      ESP_LOGCONFIG(TAG, "Write state addr %p", state);
       auto values = state->current_values;
 
       if (!values.is_on())
@@ -134,7 +141,7 @@ namespace esphome
 
       protocol_.encode(transmit_call.get_data(), lg_data);
       transmit_call.perform();
-      delay(200);
+      delay(TIMEOUT);
     }
 
   } // namespace ir_light

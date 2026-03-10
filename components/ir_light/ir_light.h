@@ -17,6 +17,7 @@ namespace esphome
       light::LightTraits get_traits() override;
       void set_output(remote_transmitter::RemoteTransmitterComponent *transmitter) { transmitter_ = transmitter; }
       void setup_state(light::LightState *state) override;
+      void update_state(light::LightState *state) override
       void write_state(light::LightState *state) override;
       void dump_config() override;
 
@@ -26,7 +27,7 @@ namespace esphome
     protected:
       remote_transmitter::RemoteTransmitterComponent *transmitter_;
       remote_base::LGProtocol protocol_;
-      float brightness_;
+      light::LightState *state_ = nullptr;
     };
 
   } // namespace ir_light
