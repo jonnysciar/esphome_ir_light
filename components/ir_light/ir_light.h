@@ -23,6 +23,7 @@ namespace esphome
     protected:
       remote_transmitter::RemoteTransmitterComponent *transmitter_;
       remote_base::LGProtocol protocol_;
+      float brightness_ = 0.0;
     };
 
   } // namespace ir_light
