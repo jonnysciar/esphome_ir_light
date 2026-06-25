@@ -7,7 +7,6 @@ namespace esphome
 {
   namespace ir_light
   {
-
     struct Color
     {
       uint8_t red;
@@ -57,8 +56,6 @@ namespace esphome
         {{135, 206, 234}, 0x00FF18E7}  // TURQUOISE
     };
 
-    void IrLightOutput::setup() {}
-
     light::LightTraits IrLightOutput::get_traits()
     {
       auto traits = light::LightTraits();
@@ -66,19 +63,8 @@ namespace esphome
       return traits;
     }
 
-    void IrLightOutput::setup_state(light::LightState *state)
-    {
-      state_ = state;
-      ESP_LOGCONFIG(TAG, "Setup state addr %p", state);
-    }
-
-    void IrLightOutput::update_state(light::LightState *state) {
-      ESP_LOGCONFIG(TAG, "Update state addr %p", state);
-    }
-
     void IrLightOutput::write_state(light::LightState *state)
     {
-      ESP_LOGCONFIG(TAG, "Write state addr %p", state);
       auto values = state->current_values;
 
       if (!values.is_on())
@@ -129,8 +115,6 @@ namespace esphome
         send(color_data);
       }
     }
-
-    void IrLightOutput::dump_config() { ESP_LOGCONFIG(TAG, "IR light"); }
 
     void IrLightOutput::send(uint32_t data)
     {

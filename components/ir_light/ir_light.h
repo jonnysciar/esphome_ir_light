@@ -13,13 +13,9 @@ namespace esphome
     class IrLightOutput : public light::LightOutput, public Component
     {
     public:
-      void setup() override;
       light::LightTraits get_traits() override;
       void set_output(remote_transmitter::RemoteTransmitterComponent *transmitter) { transmitter_ = transmitter; }
-      void setup_state(light::LightState *state) override;
-      void update_state(light::LightState *state) override
       void write_state(light::LightState *state) override;
-      void dump_config() override;
 
     private:
       void send(uint32_t data);
@@ -27,7 +23,6 @@ namespace esphome
     protected:
       remote_transmitter::RemoteTransmitterComponent *transmitter_;
       remote_base::LGProtocol protocol_;
-      light::LightState *state_ = nullptr;
     };
 
   } // namespace ir_light
