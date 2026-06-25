@@ -77,19 +77,15 @@ namespace esphome
       send(ON);
       ESP_LOGCONFIG(TAG, "set state to ON");
 
-      if (brightness_ != values.get_brightness())
+      for (int i = 0; i < 4; i++)
       {
-        for (int i = 0; i < 4; i++)
-        {
-          send(BR_DOWN);
-        }
-        for (int i = 0; i < (int)(values.get_brightness() * 4); i++)
-        {
-          send(BR_UP);
-        }
-        ESP_LOGCONFIG(TAG, "set brightness to %d", values.get_brightness() * 100);
-        brightness_ = values.get_brightness();
+        send(BR_DOWN);
       }
+      for (int i = 0; i < (int)(values.get_brightness() * 4); i++)
+      {
+        send(BR_UP);
+      }
+      ESP_LOGCONFIG(TAG, "set brightness to %d", values.get_brightness() * 100);
 
       Color c{static_cast<uint8_t>(values.get_red() * 255),
               static_cast<uint8_t>(values.get_green() * 255),
